@@ -24,14 +24,21 @@ def get_birthday_per_week(users):
         "Saturday": [],
         "Sunday": []
 }
-    #Ітеруємося по іменниникам та додаємо їх до відповідних днів тижня
+    #Ітеруємося по іменниникам та  їх до відповідних днів тижня
     for user in users:
         name = user["name"]
         birthday = user["birthday"].date()
         #Знаходимо різницю між днем народження та понеділком на цьому тижні
         diff_date = (birthday - begin_week).days
-        if diff_date >= 5:
-            week_days['Monday'].append(name)
+        if diff_date == 5 or 6:
+            if birthday.weekday() == 5:
+                week_days['Monday'].append(name)
+            elif birthday.weekday() == 6:
+                week_days['Monday'].append(name)
+            else:
+            # Додаємо пользв. до відповідного дня тижня
+                weekday = (begin_week + timedelta(days=diff_date)).strftime('%A')
+                week_days[weekday].append(name)     
         else:
             # Додаємо пользв. до відповідного дня тижня
             weekday = (begin_week + timedelta(days=diff_date)).strftime('%A')
